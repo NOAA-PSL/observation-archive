@@ -1,1 +1,1 @@
-directory containing source code and shared utilities for mannaging of the observational archive
+directory containing source code and shared utilities for managing of the observational archive
