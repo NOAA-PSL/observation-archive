@@ -2,6 +2,7 @@
 
 from datetime import datetime, timedelta
 import utils.time_utils as time_utils
+import utils.file_utils as file_utils
 import yaml
 import sys
 
@@ -9,7 +10,12 @@ import sys
 assert sys.version_info >= (3, 6), "Requires python > 3.6"
 
 #----- load and parse yaml file
-yamlpath = '../test/testinput/s3_source.yaml'
+#yamlpath = '../test/testinput/s3_source.yaml'
+assert len(sys.argv) == 2, "Config file not specified. Required calling sequence: s3-copy.py <config.yaml>"
+yamlpath = sys.argv[1]
+file_utils.is_valid_readable_file(yamlpath)
+
+
 f = open(yamlpath)
 config_dict = yaml.safe_load(f)
 f.close()
