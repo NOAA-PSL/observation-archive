@@ -31,12 +31,7 @@ destination = config_dict.get('destination')
 
 #----- create source clients
 print('Opening aws resources')
-source_clients = []
-for source in sources.items():
-  source_clients.append(boto3.Session().client('s3'))
-#----- create destination session
-destination_session = boto3.Session(profile_name=destination.get('credential_profile'))
-destination_bucket = destination_session.resource('s3').Bucket(destination["bucket"])
+destination_bucket = boto3.Session(profile_name=destination.get('credential_profile')).resource('s3').Bucket(destination["bucket"])
 destination_fn_template = destination.get('path')+destination["file_template"]["prefix"]+destination["file_template"]["root"]+destination["file_template"]["suffix"]
 print('...Done')
 
