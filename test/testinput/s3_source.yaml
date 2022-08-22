@@ -4,13 +4,42 @@ date_range:
   start: 19930101T000000Z
   end: 19930102T060000Z 
 source:
-  -gefs:
-    name: gefs blend with errors
+  -gefs1:
+    name: "gefs blend with error"
     platform: aws_s3
     key: observations/atmos/gefsv13_reanalysis-md5/%Y%m%d%H%M%S/bufr/
     bucket: noaa-reanalyses-pds
+    file_template:
+      prefix: "gdas.t%Hz."
+      root: "prepbuf-wrong"
+      suffix: ".nr"
+  -gefs2:
+    name: "gefs blend"
+    platform: aws_s3
+    key: observations/atmos/gefsv13_reanalysis-md5/%Y%m%d%H%M%S/bufr/
+    bucket: noaa-reanalyses-pds
+    file_template:
+      prefix: "gdas.t%Hz."
+      root: "prepbufr"
+      suffix: ".nr"
   -cfsr:
-    name: cfsr correction
+    name: "cfsr correction"
     platform: aws_s3
     key: observations/atmos/gefsv13_reanalysis-md5/%Y%m%d%H%M%S/bufr/
     bucket: noaa-reanalyses-pds
+    file_template:
+      prefix: "gdas.t%Hz."
+      root: "prepbufr"
+      suffix: ".nr"
+destination:
+  platform: aws_s3
+  path: "observations/reanalysis-test/conv/gefs-prepbufr/%Y/%m/prepbufr/"
+  bucket: noaa-reanalyses-pds
+  file_template:
+    prefix: "gdas.%Y%m%d.t%Hz."
+    root: "prepfur"
+    suffix: ".nr"
+  credential_profile: rnr-bdp # profile to use stored in .aws/credentials
+logging:
+  success: "test/scratch/{dtg}-success.log"
+  missing: "test/scratch/{dtg}-{source_num}-{source_name}-missing.log"
