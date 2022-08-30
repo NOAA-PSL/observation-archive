@@ -1,28 +1,40 @@
 cycling_interval: 21600
 date_range:
   datestr: '%Y%m%dT%H%M%SZ'
-  start: 19900101T000000Z
-  end:   20210101T000000Z 
+  start: 20000101T000000Z
+  end:   20100501T000000Z 
 source:
+  -cfsr:
+    name: "cfsr correction"
+    platform: aws_s3
+    key: observations/atmos/gefsv13_reanalysis-md5.sherrie.fredrick/%Y%m%d%H%M%S/bufr/
+    bucket: noaa-reanalyses-pds
+    credential_profile: rnr-bdp
+    file_template:
+      prefix: "gdas.t%Hz."
+      root: "prepbufr"
+      suffix: ".nr"
   -gefs1:
     name: "gefs blend"
     platform: aws_s3
     key: observations/atmos/gefsv13_reanalysis-md5/%Y%m%d%H%M%S/bufr/
     bucket: noaa-reanalyses-pds
+    credential_profile: rnr-bdp
     file_template:
       prefix: "gdas.t%Hz."
       root: "prepbufr"
       suffix: ".nr"
-  -cfsr:
-    name: "cfsr correction"
+  -missing:
+    name: "missing backfill"
     platform: aws_s3
-# this was used in error should be gefsv13_reanalysis-md5.sherrie.fredrick
-    key: observations/atmos/gefsv13_reanalysis-md5/%Y%m%d%H%M%S/bufr/
+    key: observations/atmos/gefsv13_reanalysis-md5.missing/%Y%m%d%H%M%S/bufr/
     bucket: noaa-reanalyses-pds
+    credential_profile: rnr-bdp
     file_template:
       prefix: "gdas.t%Hz."
       root: "prepbufr"
       suffix: ".nr"
+
 destination:
   platform: aws_s3
   path: "observations/reanalysis/conv/gefs-prepbufr/%Y/%m/prepbufr/"
@@ -35,3 +47,4 @@ destination:
 logging:
   success: "{dtg}-success.log"
   missing: "{dtg}-{source_num}-{source_name}-missing.log"
+  present: "{dtg}-present.log"
