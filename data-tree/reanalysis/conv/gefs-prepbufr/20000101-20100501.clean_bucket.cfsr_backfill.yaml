@@ -24,6 +24,17 @@ source:
       prefix: "gdas.t%Hz."
       root: "prepbufr"
       suffix: ".nr"
+  -missing:
+    name: "missing backfill"
+    platform: aws_s3
+    key: observations/atmos/gefsv13_reanalysis-md5.missing/%Y%m%d%H%M%S/bufr/
+    bucket: noaa-reanalyses-pds
+    credential_profile: rnr-bdp
+    file_template:
+      prefix: "gdas.t%Hz."
+      root: "prepbufr"
+      suffix: ".nr"
+
 destination:
   platform: aws_s3
   path: "observations/reanalysis/conv/gefs-prepbufr/%Y/%m/prepbufr/"
