@@ -16,6 +16,7 @@ source:
   -cfsr:
     name: "cfsr correction"
     platform: aws_s3
+# this was used in error should be gefsv13_reanalysis-md5.sherrie.fredrick
     key: observations/atmos/gefsv13_reanalysis-md5/%Y%m%d%H%M%S/bufr/
     bucket: noaa-reanalyses-pds
     file_template:
