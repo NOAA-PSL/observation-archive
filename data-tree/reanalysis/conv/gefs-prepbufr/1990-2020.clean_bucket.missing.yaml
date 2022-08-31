@@ -1,0 +1,30 @@
+cycling_interval: 21600
+date_range:
+  datestr: '%Y%m%dT%H%M%SZ'
+  start: 19900101T000000Z
+  end:   20210101T000000Z 
+source:
+  -missing:
+    name: "missing backfill"
+    platform: aws_s3
+    key: observations/atmos/gefsv13_reanalysis-md5.missing/%Y%m%d%H%M%S/bufr/
+    bucket: noaa-reanalyses-pds
+    credential_profile: rnr-bdp
+    file_template:
+      prefix: "gdas.t%Hz."
+      root: "prepbufr"
+      suffix: ".nr"
+
+destination:
+  platform: aws_s3
+  path: "observations/reanalysis/conv/gefs-prepbufr/%Y/%m/prepbufr/"
+  bucket: noaa-reanalyses-pds
+  file_template:
+    prefix: "gdas.%Y%m%d.t%Hz."
+    root: "prepfur"
+    suffix: ".nr"
+  credential_profile: rnr-bdp # profile to use stored in .aws/credentials
+logging:
+  success: "{dtg}-success.log"
+  missing: "{dtg}-{source_num}-{source_name}-missing.log"
+  present: "{dtg}-present.log"
