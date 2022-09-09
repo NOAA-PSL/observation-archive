@@ -14,3 +14,8 @@ to correct frolovsa ran
 === 20220831153238 ===
 frolovsa backfilled missing files using 1990-2020.clean_bucket.missing.yaml from gefsv13_reanalysis-md5.missing 
 
+=== Fri Sep  9 14:57:58 UTC 2022 ===
+renamed 
+s3://noaa-reanalyses-pds/observations/reanalysis/conv/gefs-prepbufr/ to 
+s3://noaa-reanalyses-pds/observations/reanalysis/conv/prepbufr/
+

@@ -12,3 +12,8 @@ to correct frolovsa ran
 === 20220902185429 ===
 frolovsa copied 9 missing files from gefsv13_reanalysis-md5.missing/ using 1990-2020.clean_bucket.missing.yaml
 
+=== Fri Sep  9 15:04:38 UTC 2022 ===
+renamed 
+s3://noaa-reanalyses-pds/observations/reanalysis/amsua/gefs/ to 
+s3://noaa-reanalyses-pds/observations/reanalysis/amsua/1bamua/
+
