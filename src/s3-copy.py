@@ -75,7 +75,7 @@ while not(dr.at_end()):
       except: pass
       else: #source file exists
         if (md5source == md5destination):
-          # log that this file is missing
+          # log that this file is present 
           logger_present.write("s3://{}/{} == s3://{}/{}\n".format(source_dict["Bucket"], source_dict["Key"], destination["bucket"], destination_key))
           print(f" present {si}")
           # skip to next, no need to copy identical file
