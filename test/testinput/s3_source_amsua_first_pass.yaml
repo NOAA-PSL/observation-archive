@@ -1,8 +1,8 @@
 cycling_interval: 21600
 date_range:
   datestr: '%Y%m%dT%H%M%SZ'
-  start: 19930101T000000Z
-  end: 19930102T060000Z 
+  start: 19991231T000000Z
+  end: 20000103T060000Z 
 source:
   -gefs1:
     name: "gefs blend with error"
@@ -12,8 +12,8 @@ source:
     credential_profile: rnr-bdp # profile to use stored in .aws/credentials
     file_template:
       prefix: "gdas.t%Hz."
-      root: "prepbuf-wrong"
-      suffix: ".nr"
+      root: "1bamua-wrong"
+      suffix: ".tm00.bufr_d"
   -gefs2:
     name: "gefs blend"
     platform: aws_s3
@@ -22,26 +22,16 @@ source:
     credential_profile: rnr-bdp # profile to use stored in .aws/credentials
     file_template:
       prefix: "gdas.t%Hz."
-      root: "prepbufr"
-      suffix: ".nr"
-  -cfsr:
-    name: "cfsr correction"
-    platform: aws_s3
-    key: observations/atmos/gefsv13_reanalysis-md5.sherrie.fredrick/%Y%m%d%H%M%S/bufr/
-    bucket: noaa-reanalyses-pds
-    credential_profile: rnr-bdp # profile to use stored in .aws/credentials
-    file_template:
-      prefix: "gdas.t%Hz."
-      root: "prepbufr"
-      suffix: ".nr"
+      root: "1bamua"
+      suffix: ".tm00.bufr_d"
 destination:
   platform: aws_s3
   path: "observations/reanalysis-test/conv/gefs-prepbufr/%Y/%m/prepbufr/"
   bucket: noaa-reanalyses-pds
   file_template:
     prefix: "gdas.%Y%m%d.t%Hz."
-    root: "prepfur"
-    suffix: ".nr"
+    root: "1bamua"
+    suffix: ".tm00.bufr_d"
   credential_profile: rnr-bdp # profile to use stored in .aws/credentials
 logging:
   success: "test/scratch/{dtg}-success.log"
