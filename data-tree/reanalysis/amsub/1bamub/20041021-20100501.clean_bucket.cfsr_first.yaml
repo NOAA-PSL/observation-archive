@@ -1,0 +1,39 @@
+cycling_interval: 21600
+date_range:
+  datestr: '%Y%m%dT%H%M%SZ'
+  start: 20041021T000000Z
+  end:   20100501T000000Z
+source:
+  -cfsr:
+    name: "cfsr correction"
+    platform: aws_s3
+    key: observations/atmos/gefsv13_reanalysis-md5.sherrie.fredrick/%Y%m%d%H%M%S/bufr/
+    bucket: noaa-reanalyses-pds
+    credential_profile: rnr-bdp # profile to use stored in .aws/credentials
+    file_template:
+      prefix: "gdas.t%Hz."
+      root: "1bamub"
+      suffix: ".tm00.bufr_d"
+  -gefs1:
+    name: "gefs blend"
+    platform: aws_s3
+    key: observations/atmos/gefsv13_reanalysis-md5/%Y%m%d%H%M%S/bufr/
+    bucket: noaa-reanalyses-pds
+    credential_profile: rnr-bdp # profile to use stored in .aws/credentials
+    file_template:
+      prefix: "gdas.t%Hz."
+      root: "1bamub"
+      suffix: ".tm00.bufr_d"
+destination:
+  platform: aws_s3
+  path: "observations/reanalysis/amsub/1bamub/%Y/%m/bufr/"
+  bucket: noaa-reanalyses-pds
+  file_template:
+    prefix: "gdas.%Y%m%d.t%Hz."
+    root: "1bamub"
+    suffix: ".tm00.bufr_d"
+  credential_profile: rnr-bdp # profile to use stored in .aws/credentials
+logging:
+  success: "log/{dtg}-success.log"
+  missing: "log/{dtg}-{source_num}-{source_name}-missing.log"
+  present: "log/{dtg}-present.log"
