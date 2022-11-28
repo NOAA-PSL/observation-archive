@@ -1,0 +1,31 @@
+cycling_interval: 21600
+remove source file: true
+date_range:
+  datestr: '%Y%m%dT%H%M%SZ'
+  start: 19901003T000000Z
+  end: 19901004T060000Z 
+source:
+  -gefs1:
+    name: "gefs blend with error"
+    platform: aws_s3
+    key: observations/atmos/gefsv13_reanalysis-md5/%Y%m%d%H%M%S/bufr/
+    bucket: noaa-reanalyses-pds
+    credential_profile: rnr-bdp # profile to use stored in .aws/credentials
+    file_template:
+      prefix: "gdas.t%Hz."
+      root: "adpupa"
+      suffix: ".tm00.bufr_d"
+destination:
+  platform: aws_s3
+  path: "noaa/reanalysis-restricted/conv/adpupa/%Y/%m/bufr/"
+  bucket: na-stage.us-east-2.noaa-nasa-share
+  file_template:
+    prefix: "gdas.%Y%m%d.t%Hz."
+    root: "adpupa"
+    suffix: ".tm00.bufr_d"
+  credential_profile: psl-tt # profile to use stored in .aws/credentials
+logging:
+  success: "../test/scratch/{dtg}-success.log"
+  missing: "../test/scratch/{dtg}-{source_num}-{source_name}-missing.log"
+  present: "../test/scratch/{dtg}-present.log"
+  remove: "../test/scratch/{dtg}-remove.log"

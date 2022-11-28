@@ -28,6 +28,9 @@ cycling_interval = config_dict.get('cycling_interval')
 sources = config_dict.get('source')
 # read destination info
 destination = config_dict.get('destination')
+#read "move" flag
+#move_flag = config_dict.get('remove source file','false').lower() == 'true'
+move_flag = config_dict.get('remove source file','false')
 
 #----- create source clients
 print('Opening aws resources')
@@ -43,6 +46,8 @@ print('Opening loggers')
 dtg = datetime.now().strftime('%Y%m%d%H%M%S')
 logger_present = open(config_dict["logging"]["present"].format(dtg=dtg),'wt')
 logger_success = open(config_dict["logging"]["success"].format(dtg=dtg),'wt')
+if (move_flag):
+  logger_remove = open(config_dict["logging"]["remove"].format(dtg=dtg),'wt')
 logger_missing = []
 si = 0
 for source in sources.values():
@@ -97,6 +102,12 @@ while not(dr.at_end()):
       # log success message
       logger_success.write("s3://{}/{} -> s3://{}/{}\n".format(source_dict["Bucket"], source_dict["Key"], destination["bucket"], destination_key))
       print(f" copy from {si}")
+
+      # remove source file if needed
+      if (move_flag):
+        source_buckets[si].Object(source_dict["Key"]).delete()
+        logger_remove.write("rm s3://{}/{}\n".format(source_dict["Bucket"], source_dict["Key"]))
+        print(f" remove from {si}")
       break
   # increment time counter
   dr.increment(seconds = cycling_interval)
@@ -106,6 +117,7 @@ print('done with the time loop')
 print('closing loggers')
 logger_success.close()
 logger_present.close()
+logger_remove.close()
 for l in logger_missing:
   l.close()
 print('at the end')
