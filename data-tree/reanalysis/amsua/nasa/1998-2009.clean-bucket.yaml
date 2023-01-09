@@ -1,0 +1,29 @@
+cycling_interval: 21600
+date_range:
+  datestr: '%Y%m%dT%H%M%SZ'
+  start: 19981001T000000Z
+  end:   20090601T000000Z 
+source:
+  -nasa-share:
+    name: "nasa share"
+    platform: aws_s3
+    path: "nasa/reanalysis/tovs/bufr/AMSUA_repros"
+    bucket: noaa-nasa-share
+    file_template:
+      prefix: "gmao_r21c_repro.%Y%m%d.t%Hz."
+      root: "1bamua"
+      suffix: ".tm00.bufr"
+    credential_profile: noaa-nasa
+destination:
+  platform: aws_s3
+  path: "observations/reanalysis/amsua/nasa/%Y/%m/bufr/"
+  bucket: noaa-reanalyses-pds
+  file_template:
+    prefix: "gmao_r21c_repro.%Y%m%d.t%Hz."
+    root: "1bamua"
+    suffix: ".tm00.bufr_d"
+  credential_profile: rnr-bdp # profile to use stored in .aws/credentials
+logging:
+  success: "{dtg}-success.log"
+  missing: "{dtg}-{source_num}-{source_name}-missing.log"
+  present: "{dtg}-present.log"
