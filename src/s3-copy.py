@@ -117,7 +117,8 @@ print('done with the time loop')
 print('closing loggers')
 logger_success.close()
 logger_present.close()
-logger_remove.close()
+if (move_flag):
+  logger_remove.close()
 for l in logger_missing:
   l.close()
 print('at the end')
