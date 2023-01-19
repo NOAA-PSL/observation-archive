@@ -24,6 +24,7 @@ destination:
     suffix: ".tm00.bufr_d"
   credential_profile: rnr-bdp # profile to use stored in .aws/credentials
 logging:
+  remove: "log/{dtg}-remove.log"
   success: "log/{dtg}-success.log"
   missing: "log/{dtg}-{source_num}-{source_name}-missing.log"
   present: "log/{dtg}-present.log"
