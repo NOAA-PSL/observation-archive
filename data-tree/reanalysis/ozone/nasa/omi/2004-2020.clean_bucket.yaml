@@ -1,26 +1,26 @@
 cycling_interval: 21600
-remove source file: false
+remove source file: true
 date_range:
   datestr: '%Y%m%dT%H%M%SZ'
-  start: 20130101T000000Z
-  end:   20210401T000000Z 
+  start: 20041001T000000Z
+  end:   20210101T000000Z 
 source:
   -scratch-area:
     name: "scratch area"
     platform: aws_s3
-    key:  observations/scratch_from_jrk/ompsnp/Y%Y/M%m/
+    key:  observations/scratch_from_jrk/omi_eff_adjusted/Y%Y/M%m/
     bucket: noaa-reanalyses-pds
     file_template:
-      prefix: "OMPSNP.%Y%m%d_%Hz"
+      prefix: "OMIeff-adj.%Y%m%d_%Hz"
       suffix: ".nc"
     credential_profile: rnr-bdp
 destination:
   platform: aws_s3
-  path: "observations/reanalysis/omps/nasa/ompsnp/%Y/%m/netcdf/"
+  path: "observations/reanalysis/ozone/nasa/omi-eff/%Y/%m/netcdf/"
   bucket: noaa-reanalyses-pds
   file_template:
-    prefix: "OMPSNP.%Y%m%d_%Hz"
-    suffix: ".nc"
+      prefix: "OMIeff-adj.%Y%m%d_%Hz"
+      suffix: ".nc"
   credential_profile: rnr-bdp # profile to use stored in .aws/credentials
 logging:
   remove: "log/{dtg}-remove.log"

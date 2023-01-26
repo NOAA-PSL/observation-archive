@@ -1,5 +1,5 @@
 cycling_interval: 21600
-remove source file: false
+remove source file: true
 date_range:
   datestr: '%Y%m%dT%H%M%SZ'
   start: 20040801T000000Z
@@ -16,7 +16,7 @@ source:
     credential_profile: rnr-bdp
 destination:
   platform: aws_s3
-  path: "observations/reanalysis/mls/nasa/mlsv5/%Y/%m/netcdf/"
+  path: "observations/reanalysis/ozone/nasa/mls/%Y/%m/netcdf/"
   bucket: noaa-reanalyses-pds
   file_template:
     prefix: "MLS-v5.0-oz.%Y%m%d_%Hz"
