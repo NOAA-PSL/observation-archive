@@ -12,6 +12,7 @@ source:
     bucket: noaa-reanalyses-pds
     file_template:
       prefix: "OMIeff-adj.%Y%m%d_%Hz"
+      root: ""
       suffix: ".nc"
     credential_profile: rnr-bdp
 destination:
@@ -20,10 +21,11 @@ destination:
   bucket: noaa-reanalyses-pds
   file_template:
       prefix: "OMIeff-adj.%Y%m%d_%Hz"
+      root: ""
       suffix: ".nc"
   credential_profile: rnr-bdp # profile to use stored in .aws/credentials
 logging:
-  remove: "log/{dtg}-remove.log"
+  remove: "{dtg}-remove.log"
   success: "{dtg}-success.log"
   missing: "{dtg}-{source_num}-{source_name}-missing.log"
   present: "{dtg}-present.log"
