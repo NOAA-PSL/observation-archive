@@ -12,6 +12,7 @@ source:
     bucket: noaa-reanalyses-pds
     file_template:
       prefix: "sbuv_v87.%Y%m%d.%Hz."
+      root: ""
       suffix: ".bufr"
     credential_profile: rnr-bdp
 destination:
@@ -20,6 +21,7 @@ destination:
   bucket: noaa-reanalyses-pds
   file_template:
       prefix: "sbuv_v87.%Y%m%d.%Hz."
+      root: ""
       suffix: ".bufr"
   credential_profile: rnr-bdp # profile to use stored in .aws/credentials
 logging:
