@@ -1,0 +1,31 @@
+cycling_interval: 21600
+remove source file: true
+date_range:
+  datestr: '%Y%m%dT%H%M%SZ'
+  start: 20110101T000000Z
+  end:   20120101T000000Z 
+source:
+  -scratch-area:
+    name: "scratch area"
+    platform: aws_s3
+    key:  observations/scratch_from_jrk/sbuv_v87/bufr/Y%Y/M%m/
+    bucket: noaa-reanalyses-pds
+    file_template:
+      prefix: "sbuv_v87.%Y%m%d.%Hz."
+      root: ""
+      suffix: ".bufr"
+    credential_profile: rnr-bdp
+destination:
+  platform: aws_s3
+  path: "observations/reanalysis/ozone/nasa/sbuv_v87/%Y/%m/bufr/"
+  bucket: noaa-reanalyses-pds
+  file_template:
+      prefix: "sbuv_v87.%Y%m%d.%Hz."
+      root: ""
+      suffix: ".bufr"
+  credential_profile: rnr-bdp # profile to use stored in .aws/credentials
+logging:
+  remove: "{dtg}-remove.log"
+  success: "{dtg}-success.log"
+  missing: "{dtg}-{source_num}-{source_name}-missing.log"
+  present: "{dtg}-present.log"
