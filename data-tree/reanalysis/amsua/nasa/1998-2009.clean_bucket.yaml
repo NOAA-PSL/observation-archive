@@ -3,7 +3,7 @@ remove source file: false
 date_range:
   datestr: '%Y%m%dT%H%M%SZ'
   start: 19981026T000000Z
-  end:   20090501T000000Z 
+  end:   20090501T060000Z 
 source:
   -scratch-area:
     name: "scratch area"
