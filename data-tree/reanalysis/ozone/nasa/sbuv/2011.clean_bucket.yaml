@@ -11,7 +11,7 @@ source:
     key:  observations/scratch_from_jrk/sbuv_v87/bufr/Y%Y/M%m/
     bucket: noaa-reanalyses-pds
     file_template:
-      prefix: "sbuv_v87.%Y%m%d.%Hz."
+      prefix: "sbuv_v87.%Y%m%d.%Hz"
       root: ""
       suffix: ".bufr"
     credential_profile: rnr-bdp
@@ -20,7 +20,7 @@ destination:
   path: "observations/reanalysis/ozone/nasa/sbuv_v87/%Y/%m/bufr/"
   bucket: noaa-reanalyses-pds
   file_template:
-      prefix: "sbuv_v87.%Y%m%d.%Hz."
+      prefix: "sbuv_v87.%Y%m%d.%Hz"
       root: ""
       suffix: ".bufr"
   credential_profile: rnr-bdp # profile to use stored in .aws/credentials
