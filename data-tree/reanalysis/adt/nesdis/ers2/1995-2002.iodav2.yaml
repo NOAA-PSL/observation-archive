@@ -1,0 +1,32 @@
+cycling_interval: 86400
+date_range:
+  datestr: '%Y%m%dT%H%M%SZ'
+#  start: 20100716T000000Z  #SF change to start of this stream
+#  end:   20210101T000000Z  #SF change to end of this stream + 1 day
+  start: 20010101T000000Z
+  end:   20011231T000000Z
+source:
+  -iodav2:
+    name: "iodav2"
+    platform: aws_s3
+    key: "observations/reanalysis/adt/nesdis/ers2/%Y/%m/24h/" #SF change to new directory (adt/nesdis/cryosat2)
+    bucket: noaa-reanalyses-pds
+    credential_profile: rnr-bdp # profile to use stored in .aws/credentials
+    file_template:
+      prefix: "ers2.nesdis.adt.%Y%m%d.T000000Z.iodav2.nc" #SF change to an appropriate file template
+      root: ""
+      suffix: ""
+destination:
+  platform: aws_s3
+  path: "observations/reanalysis-test/adt/nesdis/ers2/%Y/%m/24h/iodav2/" #SF change to path simmilar to line 10
+  bucket: noaa-reanalyses-pds
+  file_template:
+    prefix: "ers2.nesdis.adt.%Y%m%d.T000000Z.iodav2.nc" #SF this should match line 14 
+    root: ""
+    suffix: ""
+  credential_profile: rnr-bdp # profile to use stored in .aws/credentials
+logging:
+  remove: "log/{dtg}-remove.log"
+  success: "log/{dtg}-success.log"
+  missing: "log/{dtg}-{source_num}-{source_name}-missing.log"
+  present: "log/{dtg}-present.log"
