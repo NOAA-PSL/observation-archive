@@ -17,7 +17,7 @@ source:
     credential_profile: rnr-bdp
 destination:
   platform: aws_s3
-  path: "observations/reanalysis/trmm/nasa/%Y/%m/bufr/"
+  path: "observations/reanalysis/trmm/nasa/tmi/%Y/%m/bufr/"
   bucket: noaa-reanalyses-pds
   file_template:
     prefix: "tmi.V05A.%Y%m%d.t%Hz"
