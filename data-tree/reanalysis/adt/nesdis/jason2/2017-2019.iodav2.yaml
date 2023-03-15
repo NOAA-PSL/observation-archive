@@ -3,8 +3,8 @@ date_range:
   datestr: '%Y%m%dT%H%M%SZ'
 #  start: 20100716T000000Z  #SF change to start of this stream
 #  end:   20210101T000000Z  #SF change to end of this stream + 1 day
-  start: 20080712T000000Z
-  end:   20191001T000000Z
+  start: 20170101T120000Z
+  end:   20191001T1200000Z
 source:
   -iodav2:
     name: "iodav2"
@@ -18,7 +18,7 @@ source:
       suffix: ""
 destination:
   platform: aws_s3
-  path: "observations/reanalysis-test/adt/nesdis/jason2/%Y/%m/24h/iodav2/" #SF change to path simmilar to line 10
+  path: "observations/reanalysis/adt/nesdis/jason2/%Y/%m/24h/iodav2/" #SF change to path simmilar to line 10
   bucket: noaa-reanalyses-pds
   file_template:
     prefix: "jason2.nesdis.adt.%Y%m%d.T000000Z.iodav2.nc" #SF this should match line 14 
