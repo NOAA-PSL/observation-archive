@@ -4,7 +4,7 @@ date_range:
 #  start: 20100716T000000Z  #SF change to start of this stream
 #  end:   20210101T000000Z  #SF change to end of this stream + 1 day
   start: 20160217T000000Z
-  end:   20160701T000000Z
+  end:   20170101T000000Z
 source:
   -iodav2:
     name: "iodav2"
