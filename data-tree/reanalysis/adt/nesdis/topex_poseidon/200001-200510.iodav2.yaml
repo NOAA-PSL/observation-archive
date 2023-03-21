@@ -3,8 +3,8 @@ date_range:
   datestr: '%Y%m%dT%H%M%SZ'
 #  start: 20100716T000000Z  #SF change to start of this stream
 #  end:   20210101T000000Z  #SF change to end of this stream + 1 day
-  start: 20000101T000000Z 
-  end:   20051009T000000Z
+  start:  20000101T000000Z 
+  end:    20051009T000000Z
 source:
   -iodav2:
     name: "iodav2"
@@ -13,7 +13,7 @@ source:
     bucket: noaa-reanalyses-pds
     credential_profile: rnr-bdp # profile to use stored in .aws/credentials
     file_template:
-      prefix: "topex_poseidon.nesdis.adt.%Y%m%d.T120000Z.iodav2.nc" #SF change to an appropriate file template
+      prefix: "topex_poseidon.nesdis.adt.%Y%m%d.T000000Z.iodav2.nc" #SF change to an appropriate file template
       root: ""
       suffix: ""
 destination:
@@ -21,7 +21,7 @@ destination:
   path: "observations/reanalysis/adt/nesdis/topex_poseidon/%Y/%m/24h/iodav2/" #SF change to path simmilar to line 10
   bucket: noaa-reanalyses-pds
   file_template:
-    prefix: "topex_poseidon.nesdis.adt.%Y%m%d.T120000Z.iodav2.nc" #SF this should match line 14 
+    prefix: "topex_poseidon.nesdis.adt.%Y%m%d.T000000Z.iodav2.nc" #SF this should match line 14 
     root: ""
     suffix: ""
   credential_profile: rnr-bdp # profile to use stored in .aws/credentials
