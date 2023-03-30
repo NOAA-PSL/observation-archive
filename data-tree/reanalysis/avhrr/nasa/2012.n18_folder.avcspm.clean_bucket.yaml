@@ -1,0 +1,31 @@
+cycling_interval: 21600
+remove source file: true
+date_range:
+  datestr: '%Y%m%dT%H%M%SZ'
+  start: 20120201T000000Z
+  end:   20120401T000000Z 
+source:
+  -scratch-area:
+    name: "scratch area"
+    platform: aws_s3
+    key:  observations/reanalysis/avhrr/nasa/21cr_repro/avcspm/%Y/%m/bufr/
+    bucket: noaa-reanalyses-pds
+    file_template:
+      prefix: "n18gmao.%y%m%d.t%Hz."
+      root: "avcspm.tm00.n18"
+      suffix: ".bufr_d"
+    credential_profile: rnr-bdp
+destination:
+  platform: aws_s3
+  path: "observations/reanalysis/avhrr/nasa/21cr_repro/avcspm/%Y/%m/bufr/n18/"
+  bucket: noaa-reanalyses-pds
+  file_template:
+    prefix: "gmao.%y%m%d.t%Hz."
+    root: "avcspm.tm00.n18"
+    suffix: ".bufr_d"
+  credential_profile: rnr-bdp # profile to use stored in .aws/credentials
+logging:
+  remove: "{dtg}-remove.log"
+  success: "{dtg}-success.log"
+  missing: "{dtg}-{source_num}-{source_name}-missing.log"
+  present: "{dtg}-present.log"
