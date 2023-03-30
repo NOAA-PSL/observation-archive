@@ -8,7 +8,7 @@ source:
   -scratch-area:
     name: "scratch area"
     platform: aws_s3
-    key:  observations/scratch_from_jrk/AVCSPM/Y%Y/M%m/n16
+    key:  observations/scratch_from_jrk/AVCSPM/Y%Y/M%m/n16/
     bucket: noaa-reanalyses-pds
     file_template:
       prefix: "gmao.%y%m%d.t%Hz."
@@ -17,7 +17,7 @@ source:
     credential_profile: rnr-bdp
 destination:
   platform: aws_s3
-  path: "observations/reanalysis/avhrr/nasa/21cr_repro/avcspm/%Y/%m/bufr/n16"
+  path: "observations/reanalysis/avhrr/nasa/21cr_repro/avcspm/%Y/%m/bufr/n16/"
   bucket: noaa-reanalyses-pds
   file_template:
     prefix: "gmao.%y%m%d.t%Hz."
