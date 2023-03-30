@@ -8,7 +8,7 @@ source:
   -scratch-area:
     name: "scratch area"
     platform: aws_s3
-    key:  observations/scratch_from_jrk/trmm/bufr/Y%Y/M%m/
+    key:  observations/scratch_from_jrk/trmm/Y%Y/M%m/
     bucket: noaa-reanalyses-pds
     file_template:
       prefix: "tmi.V05A.%Y%m%d.t%Hz"
