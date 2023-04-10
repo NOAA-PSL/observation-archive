@@ -1,0 +1,31 @@
+cycling_interval: 21600
+remove source file: false
+date_range:
+  datestr: '%Y%m%dT%H%M%SZ'
+  start: 19981026T000000Z
+  end:   20090501T060000Z 
+source:
+  -scratch-area:
+    name: "scratch area"
+    platform: aws_s3
+    key:  observations/scratch_from_jrk/AMSUA_repros/Y%Y/M%m/
+    bucket: noaa-reanalyses-pds
+    file_template:
+      prefix: "gmao_r21c_repro.%Y%m%d.t%Hz."
+      root: "1bamu"
+      suffix: ".tm00.bufr"
+    credential_profile: rnr-bdp
+destination:
+  platform: aws_s3
+  path: "observations/reanalysis/amsua/nasa/r21c_repro/%Y/%m/bufr/"
+  bucket: noaa-reanalyses-pds
+  file_template:
+    prefix: "gmao_r21c_repro.%Y%m%d.t%Hz."
+    root: "1bamu"
+    suffix: ".tm00.bufr"
+  credential_profile: rnr-bdp # profile to use stored in .aws/credentials
+logging:
+  remove: "log/{dtg}-remove.log"
+  success: "{dtg}-success.log"
+  missing: "{dtg}-{source_num}-{source_name}-missing.log"
+  present: "{dtg}-present.log"
