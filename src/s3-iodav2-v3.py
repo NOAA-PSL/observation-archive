@@ -9,6 +9,7 @@ import boto3
 import botocore
 import subprocess
 import os
+import pathlib
 
 #----- check the python version because this assumes we use ordered dictionaries
 assert sys.version_info >= (3, 6), "Requires python > 3.6"
@@ -33,6 +34,7 @@ destination = config_dict.get('destination')
 #read "move" flag
 #move_flag = config_dict.get('remove source file','false').lower() == 'true'
 move_flag = config_dict.get('remove source file','false')
+PY_CURRENT_DIR = pathlib.Path(__file__).parent.resolve()
 
 #----- create source clients
 print('Opening aws resources')
@@ -49,7 +51,7 @@ print('Opening loggers')
 dtg = datetime.now().strftime('%Y%m%d%H%M%S')
 logger_present = open(config_dict["logging"]["present"].format(dtg=dtg),'wt')
 logger_success = open(config_dict["logging"]["success"].format(dtg=dtg),'wt')
-if (move_flag):
+if (move_flag != 'false'):
   logger_remove = open(config_dict["logging"]["remove"].format(dtg=dtg),'wt')
 logger_missing = []
 si = 0
@@ -94,13 +96,21 @@ while not(dr.at_end()):
     # if source file exists but the destiantion doesnt, then copy
     try:
         #download file, convert to ioda v3, upload to destination
-        v2_file = "/iodav2/" + source_filename
-        source_buckets[si].download_file(source_dict["Key"], v2_file)
-        subprocess.run(["ioda-upgrade-v2-to-v3.x", v2_file, destination_filename, "ObsSpace.yaml"])
+        print('starting to download')
+        print(source_filename)
+        source_buckets[si].download_file(source_dict["Key"], source_filename)
+
+        print('starting to run subprocess')
+        input_string = f"{source_filename} {destination_filename} ObsSpace.yaml"
+        subprocess.run(["ioda-upgrade-v2-to-v3.x"], input=bytes(input_string, 'utf-8'), shell=True)
+        print('end subprocess')
+        
+        print('uploading new file')
+        print(destination_filename)
         destination_bucket.upload_file(destination_filename, destination_key)
 
         #remove locally downloaded files 
-        os.remove(v2_file)
+        os.remove(source_filename)
         os.remove(destination_filename)
     except botocore.exceptions.ClientError as e:
       if e.response['Error']['Code'] == "404":
@@ -117,7 +127,7 @@ while not(dr.at_end()):
       print(f" copy from {si}")
 
       # remove source file if needed
-      if (move_flag):
+      if (move_flag != 'false'):
         source_buckets[si].Object(source_dict["Key"]).delete()
         logger_remove.write("rm s3://{}/{}\n".format(source_dict["Bucket"], source_dict["Key"]))
         print(f" remove from {si}")
@@ -130,7 +140,7 @@ print('done with the time loop')
 print('closing loggers')
 logger_success.close()
 logger_present.close()
-if (move_flag):
+if (move_flag != 'false'):
   logger_remove.close()
 for l in logger_missing:
   l.close()
