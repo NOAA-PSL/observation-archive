@@ -101,8 +101,7 @@ while not(dr.at_end()):
         source_buckets[si].download_file(source_dict["Key"], source_filename)
 
         print('starting to run subprocess')
-        input_string = f"{source_filename} {destination_filename} ObsSpace.yaml"
-        subprocess.run(["ioda-upgrade-v2-to-v3.x"], input=bytes(input_string, 'utf-8'), shell=True)
+        subprocess.run(["sh", "ioda-upgrade.sh", {source_filename}, {destination_filename}])
         print('end subprocess')
         
         print('uploading new file')
