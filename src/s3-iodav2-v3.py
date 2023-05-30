@@ -101,7 +101,7 @@ while not(dr.at_end()):
         source_buckets[si].download_file(source_dict["Key"], source_filename)
 
         print('starting to run subprocess')
-        subprocess.run(["sh", "ioda-upgrade.sh", {source_filename}, {destination_filename}])
+        subprocess.run(["sh", "ioda-upgrade.sh", source_filename, destination_filename])
         print('end subprocess')
         
         print('uploading new file')
