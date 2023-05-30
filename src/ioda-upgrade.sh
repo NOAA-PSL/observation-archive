@@ -9,4 +9,3 @@ echo "file-name: $1"
 echo "out-name: $2"
 
 ./ioda-upgrade-v2-to-v3.x $1 $2 ObsSpace.yaml
-done
