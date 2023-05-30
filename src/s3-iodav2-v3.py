@@ -49,7 +49,6 @@ print('...Done')
 #----- open log files
 print('Opening loggers')
 dtg = datetime.now().strftime('%Y%m%d%H%M%S')
-logger_present = open(config_dict["logging"]["present"].format(dtg=dtg),'wt')
 logger_success = open(config_dict["logging"]["success"].format(dtg=dtg),'wt')
 if (move_flag != 'false'):
   logger_remove = open(config_dict["logging"]["remove"].format(dtg=dtg),'wt')
@@ -79,31 +78,19 @@ while not(dr.at_end()):
     source_filename = current_cycle.strftime(fn_template)
     source_dict = {"Bucket" : source["bucket"], "Key" : current_cycle.strftime(source["key"]+fn_template)}
 
-    # check first if destination exists and it is the same as source
-    try: md5destination = destination_bucket.Object(destination_key).e_tag[1 :-1]
-    except: pass
-    else: #destination file exists
-      try: md5source = source_buckets[si].Object(source_dict["Key"]).e_tag[1 :-1]
-      except: pass
-      else: #source file exists
-        if (md5source == md5destination):
-          # log that this file is present 
-          logger_present.write("s3://{}/{} == s3://{}/{}\n".format(source_dict["Bucket"], source_dict["Key"], destination["bucket"], destination_key))
-          print(f" present {si}")
-          # skip to next, no need to copy identical file
-          break
-
-    # if source file exists but the destiantion doesnt, then copy
+    # download file, convert to ioda v3, upload to destination
     try:
-        #download file, convert to ioda v3, upload to destination
+        #download file
         print('starting to download')
         print(source_filename)
         source_buckets[si].download_file(source_dict["Key"], source_filename)
 
+        #convert from iodav2 to v3
         print('starting to run subprocess')
         subprocess.run(["sh", "ioda-upgrade.sh", source_filename, destination_filename])
         print('end subprocess')
         
+        #upload file 
         print('uploading new file')
         print(destination_filename)
         destination_bucket.upload_file(destination_filename, destination_key)
@@ -138,7 +125,6 @@ print('done with the time loop')
 #----- close logging files
 print('closing loggers')
 logger_success.close()
-logger_present.close()
 if (move_flag != 'false'):
   logger_remove.close()
 for l in logger_missing:
