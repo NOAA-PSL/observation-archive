@@ -1,3 +1,6 @@
+=== 20230601194653 ===
+frolovsa renamed prefur files using 9464200f and 1990-2020.clean_bucket.prepfur.yaml 
+
 === 20220823151121 and 20220823194132 ===
 first upload for 1990-2021 was done in two stages 1990-2000 2000-2021 using a version of the check-in 
 1990-2020.clean_bucket.yaml
@@ -18,4 +21,6 @@ frolovsa backfilled missing files using 1990-2020.clean_bucket.missing.yaml from
 renamed 
 s3://noaa-reanalyses-pds/observations/reanalysis/conv/gefs-prepbufr/ to 
 s3://noaa-reanalyses-pds/observations/reanalysis/conv/prepbufr/
+
+
 
